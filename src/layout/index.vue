@@ -75,9 +75,9 @@ function handleOutsideClick() {
       <app-main />
 
       <!-- 设置面板 -->
-      <RightPanel v-if="showSettings">
-        <settings />
-      </RightPanel>
+<!--      <RightPanel v-if="showSettings">-->
+<!--        <settings />-->
+<!--      </RightPanel>-->
     </div>
   </div>
 </template>

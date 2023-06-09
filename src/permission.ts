@@ -22,7 +22,7 @@ router.beforeEach(async (to, from, next) => {
     } else {
       const userStore = useUserStoreHook();
       const hasRoles = userStore.roles && userStore.roles.length > 0;
-      if (hasRoles) {
+      if (hasRoles) {   //第一次进来必定判false，进入else获取user和路由，路由拦截器重新执行进入true
         // 未匹配到任何路由，跳转404
         if (to.matched.length === 0) {
           from.name ? next({ name: from.name }) : next("/404");
@@ -31,10 +31,10 @@ router.beforeEach(async (to, from, next) => {
         }
       } else {
         try {
-          const { roles } = await userStore.getInfo();
+         const { roles } = await userStore.getInfo();
           const accessRoutes = await permissionStore.generateRoutes(roles);
           accessRoutes.forEach((route) => {
-            router.addRoute(route);
+          router.addRoute(route);
           });
           next({ ...to, replace: true });
         } catch (error) {

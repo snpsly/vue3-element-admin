@@ -8,7 +8,6 @@ defineOptions({
 import { useUserStore } from "@/store/modules/user";
 import { useTransition, TransitionPresets } from "@vueuse/core";
 
-import GithubCorner from "@/components/GithubCorner/index.vue";
 import SvgIcon from "@/components/SvgIcon/index.vue";
 import BarChart from "./components/BarChart.vue";
 import PieChart from "./components/PieChart.vue";
@@ -69,9 +68,6 @@ orderCount.value = 2000;
 
 <template>
   <div class="dashboard-container">
-    <!-- github角标 -->
-    <github-corner class="github-corner" />
-
     <!-- 用户信息 -->
     <el-row class="mb-8">
       <el-card class="w-full">
@@ -90,27 +86,8 @@ orderCount.value = 2000;
             {{ greetings }}
           </div>
 
-          <div class="space-x-2 flex items-center">
-            <el-link
-              target="_blank"
-              type="danger"
-              href="https://blog.csdn.net/u013737132/article/details/130191394"
-              >官方0到1教程</el-link
-            >
-            <el-divider direction="vertical" />
-            <el-link
-              target="_blank"
-              type="success"
-              href="https://gitee.com/youlaiorg/vue3-element-admin"
-              >Gitee源码</el-link
-            >
-            <el-divider direction="vertical" />
-            <el-link
-              target="_blank"
-              type="primary"
-              href="https://github.com/youlaitech/vue3-element-admin"
-              >GitHub源码
-            </el-link>
+          <div class="space-x-2 flex items-center ">
+
           </div>
         </div>
       </el-card>

@@ -64,17 +64,17 @@ function logout() {
       <!-- 导航栏设置(窄屏隐藏)-->
       <div v-if="device !== 'mobile'" class="setting-container">
         <!--全屏 -->
-        <div class="setting-item" @click="toggle">
-          <svg-icon
-            :icon-class="isFullscreen ? 'exit-fullscreen' : 'fullscreen'"
-          />
-        </div>
+<!--        <div class="setting-item" @click="toggle">-->
+<!--          <svg-icon-->
+<!--            :icon-class="isFullscreen ? 'exit-fullscreen' : 'fullscreen'"-->
+<!--          />-->
+<!--        </div>-->
         <!-- 布局大小 -->
-        <el-tooltip content="布局大小" effect="dark" placement="bottom">
-          <size-select class="setting-item" />
-        </el-tooltip>
+<!--        <el-tooltip content="布局大小" effect="dark" placement="bottom">-->
+<!--          <size-select class="setting-item" />-->
+<!--        </el-tooltip>-->
         <!--语言选择-->
-        <lang-select class="setting-item" />
+<!--        <lang-select class="setting-item" />-->
       </div>
 
       <!-- 用户头像 -->
@@ -88,21 +88,8 @@ function logout() {
             <router-link to="/">
               <el-dropdown-item>{{ $t("navbar.dashboard") }}</el-dropdown-item>
             </router-link>
-            <a
-              target="_blank"
-              href="https://github.com/youlaitech/vue3-element-admin"
-            >
-              <el-dropdown-item>Github</el-dropdown-item>
-            </a>
-            <a target="_blank" href="https://gitee.com/haoxr">
-              <el-dropdown-item>{{ $t("navbar.gitee") }}</el-dropdown-item>
-            </a>
-            <a
-              target="_blank"
-              href="https://juejin.cn/post/7228990409909108793"
-            >
-              <el-dropdown-item>{{ $t("navbar.document") }}</el-dropdown-item>
-            </a>
+
+
             <el-dropdown-item divided @click="logout">
               {{ $t("navbar.logout") }}
             </el-dropdown-item>

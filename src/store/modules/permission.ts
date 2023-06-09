@@ -1,6 +1,6 @@
 import { RouteRecordRaw } from "vue-router";
 import { defineStore } from "pinia";
-import { constantRoutes } from "@/router";
+import { constantRoutes,asyncRoutes } from "@/router";
 import { store } from "@/store";
 import { listRoutes } from "@/api/menu";
 
@@ -36,36 +36,37 @@ const hasPermission = (roles: string[], route: RouteRecordRaw) => {
  * @param roles 用户角色集合
  * @returns 返回用户有权限的异步(动态)路由
  */
-const filterAsyncRoutes = (routes: RouteRecordRaw[], roles: string[]) => {
-  const asyncRoutes: RouteRecordRaw[] = [];
-
-  routes.forEach((route) => {
-    const tmpRoute = { ...route }; // ES6扩展运算符复制新对象
-
-    // 判断用户(角色)是否有该路由的访问权限
-    if (hasPermission(roles, tmpRoute)) {
-      if (tmpRoute.component?.toString() == "Layout") {
-        tmpRoute.component = Layout;
-        console.log();
-      } else {
-        const component = modules[`../../views/${tmpRoute.component}.vue`];
-        if (component) {
-          tmpRoute.component = component;
-        } else {
-          tmpRoute.component = modules[`../../views/error-page/404.vue`];
-        }
-      }
-
-      if (tmpRoute.children) {
-        tmpRoute.children = filterAsyncRoutes(tmpRoute.children, roles);
-      }
-
-      asyncRoutes.push(tmpRoute);
-    }
-  });
-
-  return asyncRoutes;
-};
+// const filterAsyncRoutes = (routes: RouteRecordRaw[], roles: string[]) => {
+//   const asyncRoutes: RouteRecordRaw[] = [];
+//
+//   routes.forEach((route) => {
+//     const tmpRoute = { ...route }; // ES6扩展运算符复制新对象
+// 		console.log(route);
+// 		console.log(roles);
+//     // 判断用户(角色)是否有该路由的访问权限
+//     if (hasPermission(roles, tmpRoute)) {
+//       if (tmpRoute.component?.toString() == "Layout") {
+//         tmpRoute.component = Layout;
+//         console.log();
+//       } else {
+//         const component = modules[`../../views/${tmpRoute.component}.vue`];
+//         if (component) {
+//           tmpRoute.component = component;
+//         } else {
+//           tmpRoute.component = modules[`../../views/error-page/404.vue`];
+//         }
+//       }
+//
+//       if (tmpRoute.children) {
+//         tmpRoute.children = filterAsyncRoutes(tmpRoute.children, roles);
+//       }
+//
+//       asyncRoutes.push(tmpRoute);
+//     }
+//   });
+//
+//   return asyncRoutes;
+// };
 
 // setup
 export const usePermissionStore = defineStore("permission", () => {
@@ -85,16 +86,18 @@ export const usePermissionStore = defineStore("permission", () => {
   function generateRoutes(roles: string[]) {
     return new Promise<RouteRecordRaw[]>((resolve, reject) => {
       // 接口获取所有路由
-      listRoutes()
-        .then(({ data: asyncRoutes }) => {
+      // listRoutes()
+      //   .then(({ data }) => {
           // 根据角色获取有访问权限的路由
-          const accessedRoutes = filterAsyncRoutes(asyncRoutes, roles);
-          setRoutes(accessedRoutes);
-          resolve(accessedRoutes);
-        })
-        .catch((error) => {
-          reject(error);
-        });
+         // const accessedRoutes = filterAsyncRoutes(asyncRoutes, roles);
+        //  setRoutes(accessedRoutes);
+       //   resolve(accessedRoutes);
+					setRoutes(asyncRoutes);
+					resolve(asyncRoutes);
+        // })
+        // .catch((error) => {
+        //   reject(error);
+        // });
     });
   }
   return { routes, setRoutes, generateRoutes };
